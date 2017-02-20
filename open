@@ -1,0 +1,6 @@
+#!/bin/bash
+# Open files with xdg-open in gui friendly windows
+
+for arg in "$@"; do
+  (xdg-open "$arg" &> /dev/null &)
+done

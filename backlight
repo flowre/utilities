@@ -1,0 +1,22 @@
+#!/bin/bash
+# Control backlight from command line
+# User must own brightness file, e.g. sudo chown user $file
+#
+# Syntax:
+#   backlight +10
+#   backlight -10
+
+dir="/sys/class/backlight/radeon_bl0"
+file="$dir"/brightness
+max=$(cat "$dir"/max_brightness)
+current=$(cat "$file")
+new=$((current + $1))
+
+if [[ $new < 0 ]]; then
+	new=0
+fi
+if [[ $new > $max ]]; then
+	new=$max
+fi
+
+echo $new > $file

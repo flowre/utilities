@@ -1,0 +1,9 @@
+#!/bin/bash
+# Convert files to pdf with pandoc and open with xdg-open
+
+for arg in "$@"; do
+  tmp_fn=/tmp/$(readlink -f "$arg" | shasum | head -c 8).pdf
+  pandoc "$arg" -o "$tmp_fn"
+  (xdg-open "$tmp_fn" &> /dev/null &)
+done
+
